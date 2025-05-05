@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="Img/Logo.png" type="image/x-icon">
+    <title>Башнефть</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-size: 2vw;
+            text-align: justify;
+            color: white;
+            background-color: black;
+        }
+        main {
+            margin: 15px;
+        }
+        p {
+            margin: 10px 0 0 25px;  
+        }
+        footer {
+            display: flex;
+            height: 100px;
+            align-items: center; /* Центрируем элементы по вертикали */
+            padding: 0 20px;
+            font-size: 24px;
+        }
+        .header {
+            position: relative;
+            margin: 0;
+            height: 700px;
+            background-image: url('Img/Head.JPG');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .gradient_head {
+            position: absolute;
+            width: 100%;
+            height: 60%;
+            bottom: 0;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 1), rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+            margin: 0;
+        }
+        .gradient_block3 {
+            position: absolute;
+            width: 100%;
+            height: 10%;
+            top: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+            margin: 0;
+        }
+        #text {
+            color: rgba(255, 255, 255, 1);
+            position: absolute;
+            bottom: 0;
+            margin: 20px;
+            font-size: 10vw;
+        }
+        img {
+            display: block;
+        }
+        h2 {
+            margin: 30px 0 0 0; 
+            text-align: center;
+        }
+        .block1 {
+            display: flex; /* Используем flexbox для выравнивания */
+            align-items: center; /* Центрируем элементы по вертикали */
+            justify-content: center; /* Центрируем элементы по горизонтали */
+            margin: 0 auto; /* Центрируем блок */
+        }
+        .block3 {
+            position: relative;
+            margin: 0 0 15px 0;
+            background-image: url('Img/Block3.jpg');
+            background-size: 150%;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .Text_block3 {
+            background-color: rgba(30 30 30 / 20%);
+            backdrop-filter: blur(10px);
+            margin: 50px;
+            border-radius: 15px;
+            padding: 15px;
+            justify-content: center;
+            font-size: 2vw;
+            margin-bottom: 30px;
+        }
+        .backToTop {
+            border-radius: 50%;
+            height: 50px;
+            width: 50px;
+            align-items: center;
+            justify-content: center;
+            color: black;
+            background-color: white;
+            position: fixed;
+            bottom: 20px; /* Отступ от нижней части экрана */
+            right: 20px; /* Отступ от левой части экрана */
+            display: flex; /* Используем flexbox для центрирования содержимого */
+            align-items: center; /* Центрируем по вертикали */
+            justify-content: center; /* Центрируем по горизонтали */
+            cursor: pointer; /* Указатель при наведении */
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="gradient_head"></div>
+        <h1 id="text">Башнефть</h1>
+    </header>
+    <main>
+        <div class="block1">
+            <img src="Img/Company.png" width="20%">
+            <p>
+                <a href="https://ru.wikipedia.org/wiki/Башнефть"><b>Башнефть</b></a> — крупная российская нефтедобывающая компания, входившая ранее в структуру 
+                государственного концерна «Роснефть», ныне принадлежащая частному капиталу. История 
+                компании начинается с момента образования советской республики Башкортостан, когда было 
+                открыто богатое месторождение нефти.
+            </p>
+        </div>
+        
+        <div class="block2">
+            <h2 >Основные направления деятельности:</h2>
+            <ul>
+                <li>
+                    <i>Добыча нефти:</i> Компания ведет добычу углеводородов преимущественно на территории Башкортостана 
+                    и других регионов России.
+                </li><br>
+                <li>
+                    <i>Переработка нефти:</i> Обладает мощностями нефтеперерабатывающих заводов («Уфанефтехим», «Ново-Уфимский НПЗ»), 
+                    производящих широкий спектр продукции: бензин, дизельное топливо, мазут, битум и другие продукты переработки.
+                </li><br>
+                <li>
+                    <i>Нефтепродукты и химическая продукция:</i> Помимо традиционного топлива, выпускает продукцию химической промышленности.
+                </li><br>
+                <li>
+                    <i>Розничная торговля:</i> Компания управляет сетью автозаправочных станций (АЗС), предлагающих клиентам 
+                    высококачественное моторное топливо и сопутствующие товары.
+                </li>
+            </ul> <br>
+        </div>
+        <div class="block3">
+            <div class="gradient_block3" ></div> <br>
+            <div class="Text_block3">
+                <h2><u>Год основания и история развития:</u></h2> <br>
+                <p>
+                    Компания была основана официально в 1946 году. Однако начало её истории связано с открытием первых месторождений нефти 
+                    ещё в конце XIX века. Масштабная добыча началась именно после Великой Отечественной войны, когда возникла острая необходимость 
+                    обеспечить страну нефтью и топливом для восстановления экономики.
+                </p>
+                <p>
+                    Исторически важную роль в развитии предприятия сыграл легендарный советский геолог Сергей Александрович Гиршберг, 
+                    обнаруживший крупнейшие месторождения нефти в башкирской степи в середине XX века. Впоследствии именем Гиршберга 
+                    назвали одно из крупнейших нефтегазовых предприятий региона.
+                </p>
+                <p>
+                    В разные периоды своей истории «Башнефть» меняла форму собственности. Первоначально она была государственной структурой СССР, 
+                    позже стала акционерным обществом РСФСР, далее приватизировалась и прошла череду изменений структуры владения вплоть до 
+                    включения в состав госконцерна «Роснефть». Сегодня же предприятие принадлежит частной структуре АО «АФК Система».
+                </p>
+                <p>
+                    Таким образом, компания «Башнефть» является одним из ключевых игроков российского рынка нефти и нефтепродуктов, обладающим 
+                    значительным опытом и технологиями в области добычи и переработки сырья.
+                </p>
+            </div> <br>
+        </div>
+        
+    </main>
+    <div class="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">&#8679</div>
+    <footer >
+        <div top="50%">
+            Единая горячая линия: 8-800-775-75-88
+        </div>
+    </footer>
+</body>
+</html>

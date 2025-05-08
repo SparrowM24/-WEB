@@ -5,6 +5,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" href="Img/Logo.png" type="image/x-icon">
         <title>Калькулятор валют</title>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+            }
+            h2 {
+                text-align: center;
+            }
+            canvas {
+                display: block;
+                margin: 0 auto;
+            }
+        </style>
+
         <script>
             function CBR_XML_Daily_Ru(rates) {
                 function trend(current, previous) {
@@ -19,31 +34,128 @@
                 KRW.innerHTML += trend(rates.Valute.KRW.Value, rates.Valute.KRW.Previous);
             }
 
-            // Добавьте обработку ошибок
-            function fetchRates() {
-                fetch('https://www.cbr-xml-daily.ru/daily_json.js')
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then(data => CBR_XML_Daily_Ru(data))
-                    .catch(error => console.error('Ошибка:', error));
+                // Добавьте обработку ошибок
+                function fetchRates() {
+                    fetch('https://www.cbr-xml-daily.ru/daily_json.js')
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => CBR_XML_Daily_Ru(data))
+                        .catch(error => console.error('Ошибка:', error));
+                }
+
+                function convertToKRW() {
+                var rubles = parseFloat(document.getElementById('rubles').value);
+                var krwRate = parseFloat(document.getElementById('KRW').innerHTML.split('—')[1].replace(',', '.').trim());
+                var result = rubles * krwRate;
+                document.getElementById('resultKRW').innerHTML = result.toFixed(0) + ' ₩';
+            }
+            function convertToRUB() {
+                var won = parseFloat(document.getElementById('won').value);
+                var krwRate = parseFloat(document.getElementById('KRW').innerHTML.split('—')[1].replace(',', '.').trim());
+                var result = won / krwRate;
+                document.getElementById('resultRUB').innerHTML = result.toFixed(2) + ' ₽';
             }
 
-            function convertToKRW() {
-            var rubles = parseFloat(document.getElementById('rubles').value);
-            var krwRate = parseFloat(document.getElementById('KRW').innerHTML.split('—')[1].replace(',', '.').trim());
-            var result = rubles * krwRate;
-            document.getElementById('resultKRW').innerHTML = result.toFixed(0) + ' ₩';
-        }
-        function convertToRUB() {
-            var won = parseFloat(document.getElementById('won').value);
-            var krwRate = parseFloat(document.getElementById('KRW').innerHTML.split('—')[1].replace(',', '.').trim());
-            var result = won / krwRate;
-            document.getElementById('resultRUB').innerHTML = result.toFixed(2) + ' ₽';
-        }
+            let krwRates = [];
+            let krwDates = [];
+
+            async function fetchRates() {
+                try {
+                    const response = await fetch('https://www.cbr-xml-daily.ru/daily_json.js');
+                    if (!response.ok) {
+                        throw new Error('Ошибка сети: ' + response.statusText);
+                    }
+                    const data = await response.json();
+                    fetchHistoricalRates();
+                } catch (error) {
+                    console.error('Ошибка:', error);
+                    alert('Не удалось загрузить данные. Пожалуйста, попробуйте позже.');
+                }
+            }
+
+            async function fetchHistoricalRates() {
+                const today = new Date();
+                const lastMonth = new Date();
+                lastMonth.setMonth(today.getMonth() - 1);
+                const promises = [];
+
+                for (let d = lastMonth; d <= today; d.setDate(d.getDate() + 1)) {
+                    const year = d.getFullYear();
+                    const month = String(d.getMonth() + 1).padStart(2, '0');
+                    const day = String(d.getDate()).padStart(2, '0');
+                    const date = `/${year}/${month}/${day}`;
+                    promises.push(fetchHistoricalRate(date));
+                }
+
+                await Promise.all(promises);
+                drawChart();
+            }
+
+            async function fetchHistoricalRate(date) {
+                try {
+                    const response = await fetch(`https://www.cbr-xml-daily.ru/archive${date}/daily_json.js`);
+                    if (!response.ok) {
+                        throw new Error('Ошибка при получении данных за ' + date);
+                    }
+                    const data = await response.json();
+                    if (data.Valute.KRW) {
+                        krwRates.push(data.Valute.KRW.Value);
+                        krwDates.push(date);
+                    }
+                } catch (error) {
+                    console.error('Ошибка при получении исторических данных:', error);
+                }
+            }
+
+            function drawChart() {
+                if (krwRates.length === 0 || krwDates.length === 0) {
+                    alert('Нет данных для отображения графика.');
+                    return;
+                }
+
+                const ctx = document.getElementById('krwChart').getContext('2d');
+                const chart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: krwDates,
+                        datasets: [{
+                            label: 'Курс KRW',
+                            data: krwRates,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Курс (в рублях)'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Дата'
+                                }
+                            }
+                        },
+                        onClick: (event) => {
+                            const activePoints = chart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, false);
+                            if (activePoints.length) {
+                                const idx = activePoints[0].index;
+                                alert(`Дата: ${krwDates[idx]}, Курс: ${krwRates[idx]}`);
+                            }
+                        }
+                    }
+                });
+            }
 
             window.onload = fetchRates; // Загружаем данные при загрузке страницы
         </script>
@@ -62,6 +174,8 @@
         <input type="number" id="won" placeholder="Введите сумму в вонах" />
         <button onclick="convertToRUB()">Конвертировать в Рубли</button>
         <div id="resultRUB"></div>
+        <h2>Изменения курса KRW за последний месяц</h2>
+        <canvas id="krwChart" width="600" height="300"></canvas>
     </div>
     </body>
 </html>

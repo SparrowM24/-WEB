@@ -3,252 +3,296 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="icon" href="Img/Logo.png" type="image/x-icon">
     <title>Башнефть</title>
     <style>
-        body{
-            vertical-align: top;
-            text-align: justify;
-            font-family: Arial, sans-serif;
+        :root {
+            --primary-color: #008B0F;
+            --secondary-color: #FFF;
+            --font-family: 'Montserrat', sans-serif;
         }
-
-        .New {
-            width: 80%;
-            height: auto;
-            display: block;
-            margin: 20px auto;
-            text-align: justify;
-            cursor: pointer;
-            font-size: 20px;
-            font-weight: bold;
-            padding: 5px 20px;
-            color: #344e41;
-            background-color: #fefae0;
-            border-radius: 10px;
+        body {
+            font-family: var(--font-family);
+            background-color: var(--secondary-color);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
         }
-
-        .full_text {
-            display: none;
-            width: 0;
-            height: 0;
-            opacity: 0;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
-
-        h2 {
-            color: #e63946;
-            margin: 10px;
+        header {
+            color: var(--secondary-color);
+            padding: 15px 0;
+            text-align: center;
+            background-image: url('Img/1.jpg');
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        nav {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        nav ul li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+        nav ul li a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-size: 1.2em;
+            transition: all 0.3s ease-in-out;
+        }
+        nav ul li a:hover {
+            color: #FFFACC;
+        }
+        .news-section {
+            margin-bottom: 40px;
+        }
+        .news-item {
+            background-color: var(--secondary-color);
+            border-left: 5px solid var(--primary-color);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .news-item h2 {
+            color: var(--primary-color);
             font-size: 24px;
+            margin-bottom: 10px;
         }
-
-        .button {
-            background-color: #588157;
-            color: #e9edc9;
-            border-color: #588157;
-            border-radius: 10px;
-            width: auto;
-            display: inline;
-            padding: 3px;
-            margin: 10px;
+        .news-item p {
+            font-size: 16px;
+            line-height: 1.6;
         }
-        p{
-            margin: 10px;
+        .news-item .more-button {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease-in-out;
         }
-        .date {
-            margin: 10px;
+        .news-item .more-button:hover {
+            background-color: #00A81E;
         }
-
-        .button:checked + .full_text{
-            display: inline;
-            opacity: 1;
+        .hidden-text {
+            display: none;
+            margin-top: 10px;
+        }
+        .show-more-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .show-more-container .date {
+            font-size: 14px;
+            color: #777;
+        }
+        @media only screen and (max-width: 768px) {
+            nav ul li {
+                display: block;
+                margin-bottom: 10px;
+            }
+            nav ul li a {
+                font-size: 1.5em;
+            }
         }
     </style>
-    <script>
-        // Ждем загрузки DOM
-        document.addEventListener('DOMContentLoaded', () => {
-            // Получаем все кнопки с классом "button"
-            const buttons = document.querySelectorAll('.New .button');
-            buttons.forEach(button => {
-                button.addEventListener('click', () => {
-                    // Находим родительский блок .New для текущей кнопки
-                    const newBlock = button.closest('.New');
-                    if (!newBlock) return;
-                    // Находим полный текст внутри этого блока
-                    const fullText = newBlock.querySelector('.full_text');
-                    if (!fullText) return;
-                    // Переключаем видимость
-                    if (fullText.style.display === 'inline') {
-                        fullText.style.display = 'none';
-                        fullText.style.opacity = '0';
-                        button.textContent = 'Показать';
-                    } else {
-                        fullText.style.display = 'inline';
-                        setTimeout(() => { fullText.style.opacity = '1'; }, 10);
-                        button.textContent = 'Скрыть';
-                    }
-                });
-            });
-        });
-    </script>
 </head>
 <body>
-    <div class="New">
-        <h2> Отзыв ходатайства Алексея Улюкаева о снятии судимости </h2>
-        <p>
-            Алексей Улюкаев, ранее занимавший должность министра экономического развития России, 
-            отказался от подачи заявления о снятии с себя судимости, связанной с уголовным делом о получении взятки.
-            <span class="full_text">
-                Данное заявление было сделано в ходе судебного заседания в Москве. Этот случай вновь привлек внимание 
-                общественности к судьбе бывшего высокопоставленного чиновника.
-            </span>
-        </p> 
-        <div class="button">Показать</div>
-        <div class="date">
-            Дата публикации: 18 февраля 2025
+    <header>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="about.html">О компании</a></li>
+            <li><a href="News.html" class="active" aria-current="page">Новости</a></li>
+            <li><a href="calculator.html">Калькулятор курса валют</a></li>
+            <li><a href="contacts.html">Контакты</a></li>
+            <li><a href="video.html">Видео</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="news-section">
+            <div class="news-item">
+                <h2>Отзыв ходатайства Алексея Улюкаева о снятии судимости</h2>
+                <p>
+                    Алексей Улюкаев, ранее занимавший должность министра экономического развития России, отказался от подачи заявления о снятии с себя судимости, связанной с уголовным делом о получении взятки.
+                    <span class="hidden-text">
+                        Данное заявление было сделано в ходе судебного заседания в Москве. Этот случай вновь привлек внимание общественности к судьбе бывшего высокопоставленного чиновника.
+                    </span>
+                </p>
+                <div class="show-more-container">
+                    <button class="more-button" onclick="toggleHiddenText(this)">Подробнее</button>
+                    <div class="date">Дата публикации: 18 февраля 2025</div>
+                </div>
+            </div>
+        </div>
+        <div class="news-section">
+            <div class="news-item">
+                <h2>Запуск промышленного производства новых видов дорожных битумов</h2>
+                <p>
+                    Подразделения «Башнефть-Новойл» и «Башнефть-Уфанефтехим» начали выпуск инновационных марок дорожного битума стандарта PG 64-28*.
+                    <span class="hidden-text">
+                        Данный продукт обладает уникальными физико-химическими свойствами, обеспечивающими долговечность покрытия дорог при интенсивных транспортных нагрузках и резких изменениях температуры окружающей среды. Такое новшество повышает конкурентоспособность отечественной дорожной отрасли.
+                    </span>
+                </p>
+                <div class="show-more-container">
+                    <button class="more-button" onclick="toggleHiddenText(this)">Подробнее</button>
+                    <div class="date">Дата публикации: 18 февраля 2025</div>
+                </div>
+            </div>
+        </div>
+        <div class="news-section">
+            <div class="news-item">
+                <h2>Подключение нефтегазовых скважин к проекту «Цифровое месторождение»</h2>
+                <p>
+                    Более 4,5 тыс. нефтедобывающих скважин компании «Башнефть» были интегрированы в единую систему цифрового мониторинга и управления производством («Цифровое месторождение»).
+                    <span class="hidden-text">
+                        Эта инициатива направлена на оптимизацию процесса разработки месторождения и обеспечение оперативного реагирования на изменения состояния скважин. Благодаря данной инициативе повышается производительность труда и экономическая эффективность компаний группы «Роснефть».
+                    </span>
+                </p>
+                <div class="show-more-container">
+                    <button class="more-button" onclick="toggleHiddenText(this)">Подробнее</button>
+                    <div class="date">Дата публикации: май 2025</div>
+                </div>
+            </div>
+        </div>
+        <div class="news-section">
+            <div class="news-item">
+                <h2>Предложение о выплате рекордных дивидендов</h2>
+                <p>
+                    Совет директоров «Башнефти» рекомендовал выплатить дивиденды за прошедший финансовый период (2024 год), составившие порядка 147 руб. на каждую обыкновенную акцию.
+                    <span class="hidden-text">
+                        Такая сумма является одной из крупнейших среди российских нефтегазовых компаний и свидетельствует о финансовой устойчивости и успехах компании.
+                    </span>
+                </p>
+                <div class="show-more-container">
+                    <button class="more-button" onclick="toggleHiddenText(this)">Подробнее</button>
+                    <div class="date">Дата публикации: май 2025</div>
+                </div>
+            </div>
+        </div>
+        <div class="news-section">
+            <div class="news-item">
+                <h2>Реализация экологической программы</h2>
+                <p>
+                    Для снижения негативного воздействия на природу руководство «Башнефти» реализует комплекс мер по сокращению выбросов загрязняющих веществ в атмосферу и воду.
+                    <span class="hidden-text">
+                        Компания инвестирует в современные очистительные сооружения и проводит мероприятия по повышению энергоэффективности процессов нефтепереработки. Эти шаги способствуют улучшению экологической ситуации региона и укреплению позиции компании как социально ответственной организации.
+                    </span>
+                </p>
+                <div class="show-more-container">
+                    <button class="more-button" onclick="toggleHiddenText(this)">Подробнее</button>
+                    <div class="date">Дата публикации: август 2024</div>
+                </div>
+            </div>
+        </div>
+        <div class="news-section">
+            <div class="news-item">
+                <h2>Модернизация перерабатывающего комплекса</h2>
+                <p>
+                    Завершилась масштабная программа обновления производственного оборудования на ключевых заводах компании, включая Нефтеперерабатывающий завод имени Шарафа Батырова в Уфе и другие объекты.
+                    <span class="hidden-text">
+                        Новая техника позволила существенно снизить себестоимость конечной продукции и расширить ассортимент производимых нефтепродуктов высокого качества.
+                    </span>
+                </p>
+                <div class="show-more-container">
+                    <button class="more-button" onclick="toggleHiddenText(this)">Подробнее</button>
+                    <div class="date">Дата публикации: июль 2024</div>
+                </div>
+            </div>
+        </div>
+        <div class="news-section">
+            <div class="news-item">
+                <h2>Программы социальной ответственности</h2>
+                <p>
+                    Продолжается активное участие «Башнефти» в социальных программах Республики Башкортостан и соседних регионов.
+                    <span class="hidden-text">
+                        За последний год увеличены расходы на социальные проекты, направленные на улучшение медицинского обслуживания работников компании и жителей прилегающих территорий. Подобные меры укрепляют доверие населения к крупнейшему налогоплательщику региона.
+                    </span>
+                </p>
+                <div class="show-more-container">
+                    <button class="more-button" onclick="toggleHiddenText(this)">Подробнее</button>
+                    <div class="date">Дата публикации: сентябрь 2023</div>
+                </div>
+            </div>
+        </div>
+        <div class="news-section">
+            <div class="news-item">
+                <h2>Новые меры защиты НПЗ от угроз безопасности</h2>
+                <p>
+                    По сообщениям представителей компании, инженерные подразделения подразделений «Башнефть» успешно реализовали комплекс защитных мер, повысивших безопасность основных объектов нефтепереработки.
+                    <span class="hidden-text">
+                        Были установлены дополнительные системы наблюдения и контроля, модернизирована система оповещения персонала и введена дополнительная защита периметра заводов. Данные решения направлены на предотвращение возможных атак беспилотниками и иных внешних угроз.
+                    </span>
+                </p>
+                <div class="show-more-container">
+                    <button class="more-button" onclick="toggleHiddenText(this)">Подробнее</button>
+                    <div class="date">Дата публикации: май 2025</div>
+                </div>
+            </div>
+        </div>
+        <div class="news-section">
+            <div class="news-item">
+                <h2>Масштабирование проекта «Цифровое месторождение»</h2>
+                <p>
+                    Совместно с материнской компанией «Роснефть», дочернее предприятие «Башнефть» продолжает внедрение цифровой платформы «Цифровое месторождение».
+                    <span class="hidden-text">
+                        Проект охватывает более 4,5 тыс. нефтяных скважин, оснащённых системой автоматического мониторинга и сбора данных. Применение современных цифровых технологий позволяет повысить качество управления добычей нефти, сократить затраты на обслуживание и ускорить принятие управленческих решений.
+                    </span>
+                </p>
+                <div class="show-more-container">
+                    <button class="more-button" onclick="toggleHiddenText(this)">Подробнее</button>
+                    <div class="date">Дата публикации: май 2025</div>
+                </div>
+            </div>
+        </div>
+        <div class="news-section">
+            <div class="news-item">
+                <h2>Прогресс в области выплаты дивидендов</h2>
+                <p>
+                    Согласно решению совета директоров «Башнефти», компания планирует произвести дивидендные выплаты по итогам финансового периода 2024 года.
+                    <span class="hidden-text">
+                        Ожидается, что размер выплат составит около 147 руб. на одну обыкновенную акцию. Высокий уровень доходности подтверждает финансовую устойчивость и успехи компании.
+                    </span>
+                </p>
+                <div class="show-more-container">
+                    <button class="more-button" onclick="toggleHiddenText(this)">Подробнее</button>
+                    <div class="date">Дата публикации: январь 2025</div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="New">
-        <h2> Запуск промышленного производства новых видов дорожных битумов </h2>
-        <p>
-            Подразделения «Башнефть-Новойл» и «Башнефть-Уфанефтехим» начали выпуск инновационных марок дорожного битума стандарта PG 64-28*. 
-            <span class="full_text">Данный продукт обладает уникальными физико-химическими свойствами, обеспечивающими 
-                долговечность покрытия дорог при интенсивных транспортных нагрузках и резких изменениях температуры окружающей 
-                среды. Такое новшество повышает конкурентоспособность отечественной дорожной отрасли. </span>
-        </p> 
-        <div class="button">Показать</div>
-        <div class="date">
-            Дата публикации: 18 февраля 2025
-        </div>
-    </div>
-
-    <div class="New">
-        <h2> Подключение нефтегазовых скважин к проекту «Цифровое месторождение» </h2>
-        <p>
-            Более 4,5 тысячи нефтедобывающих скважин компании «Башнефть» были интегрированы в единую систему цифрового 
-            мониторинга и управления производством («Цифровое месторождение»). 
-            <span class="full_text">
-                Эта инициатива направлена на оптимизацию процесса разработки месторождения и обеспечение оперативного 
-                реагирования на изменения состояния скважин. Благодаря данной инициативе повышается производительность 
-                труда и экономическая эффективность компаний группы «Роснефть». 
-            </span>
-        </p> 
-        <div class="button">Показать</div>
-        <div class="date">
-            Дата публикации: Май 2025
-        </div>
-    </div>
-
-    <div class="New">
-        <h2> Предложение о выплате рекордных дивидендов </h2>
-        <p>
-            Совет директоров «Башнефти» рекомендовал выплатить дивиденды за прошедший финансовый период (2024 год), 
-            составившие порядка 147 рублей на каждую обыкновенную акцию. 
-            <span class="full_text">Такая сумма является одной из крупнейших среди российских нефтегазовых 
-                компаний и свидетельствует о финансовой устойчивости и успехах компании. 
-            </span>
-        </p> 
-        <div class="button">Показать</div>
-        <div class="date">
-            Дата публикации: Май 2025
-        </div>
-    </div>
-    
-    <div class="New">
-        <h2> Реализация экологической программы </h2>
-        <p>
-            Для снижения негативного воздействия на природу руководство «Башнефти» реализует комплекс 
-            мер по сокращению выброса загрязняющих веществ в атмосферу и воду.
-            <span class="full_text">Компания инвестирует в современные очистительные сооружения и 
-                проводит мероприятия по повышению энергоэффективности процессов нефтепереработки. 
-                Такие шаги способствуют улучшению экологической ситуации региона и укреплению позиции 
-                компании как социально ответственной организации. 
-            </span>
-        </p> 
-        <div class="button">Показать</div>
-        <div class="date">
-            Дата публикации: Август 2024
-        </div>
-    </div>
-    
-    <div class="New">
-        <h2> Модернизация перерабатывающего комплекса </h2>
-        <p>
-            Завершилась масштабная программа обновления производственного оборудования на ключевых заводах компании, 
-            включая Нефтеперерабатывающий завод имени Шарафа Батырова в Уфе и другие объекты.
-            <span class="full_text">Новая техника позволила существенно снизить себестоимость конечной продукции 
-                и расширить ассортимент производимых нефтепродуктов высокого качества.
-            </span>
-        </p> 
-        <div class="button">Показать</div>
-        <div class="date">
-            Дата публикации: Июль 2024
-        </div>
-    </div>
-    
-    <div class="New">
-        <h2> Программы социальной ответственности </h2>
-        <p>
-            Продолжается активное участие «Башнефти» в социальных программах Республики Башкортостан и соседних регионов. 
-            <span class="full_text">За последний год увеличены расходы на социальные проекты, направленные на улучшение 
-                медицинского обслуживания работников компании и жителей прилегающих территорий. Подобные меры укрепляют 
-                доверие населения к крупнейшему налогоплательщику региона.
-            </span>
-        </p> 
-        <div class="button">Показать</div>
-        <div class="date">
-            Дата публикации: Сентябрь 2023
-        </div>
-    </div>
-    
-    <div class="New">
-        <h2> Новые меры защиты НПЗ от угроз безопасности </h2>
-        <p>
-            По сообщениям представителей компании, инженерные подразделения подразделений «Башнефть» успешно реализовали 
-            комплекс защитных мер, повысивших безопасность основных объектов нефтепереработки. 
-            <span class="full_text">Были установлены дополнительные системы наблюдения и контроля, модернизирована система 
-                оповещения персонала и введена дополнительная защита периметра заводов. Все данные решения приняты руководством 
-                компании для предотвращения возможных атак беспилотниками и иных внешних угроз. Таким образом, усиленные 
-                меры обеспечат бесперебойную работу важнейших объектов компании и сохранение уровня безопасности сотрудников.
-            </span>
-        </p> 
-        <div class="button">Показать</div>
-        <div class="date">
-            Дата публикации: Май 2025
-        </div>
-    </div>
-    
-    <div class="New">
-        <h2> Масштабирование проекта «Цифровое месторождение» </h2>
-        <p>
-            Совместно с материнской компанией «Роснефть», дочернее предприятие «Башнефть» продолжает внедрение 
-            цифровой платформы «Цифровое месторождение». 
-            <span class="full_text">Проект охватывает более 4,5 тысяч нефтяных скважин, оснащённых системой 
-                автоматического мониторинга и сбора данных. Комплексное применение новейших цифровых технологий 
-                позволило повысить качество управления добычей нефти, сократить затраты на обслуживание и ускорить 
-                принятие управленческих решений. Данная технология способствует увеличению производительности добывающих 
-                активов и обеспечению устойчивого роста объёмов добычи углеводородов. </span>
-        </p> 
-        <div class="button">Показать</div>
-        <div class="date">
-            Дата публикации: Май 2025
-        </div>
-    </div>
-    
-    <div class="New">
-        <h2> Прогресс в области выплаты дивидендов </h2>
-        <p>
-            Согласно решению совета директоров «Башнефти», компания планирует произвести дивидендные выплаты по итогам финансового периода 2024 года. 
-            <span class="full_text">Ожидается, что размер выплат составит около 147 рублей на одну обыкновенную акцию. 
-                Такой высокий уровень доходности демонстрирует успешность бизнеса и стабильность положения компании на рынке. 
-                Получатели дивидендов смогут воспользоваться возможностью эффективного вложения средств, а также поддержать дальнейшую 
-                деятельность одного из ведущих игроков российского рынка нефти и газа.
-            </span>
-        </p> 
-        <div class="button">Показать</div>
-        <div class="date">
-            Дата публикации: Январь 2025
-        </div>
-    </div>
-    
+    <script>
+    function toggleHiddenText(btn) {
+        let parentDiv = btn.parentNode.parentNode;
+        let hiddenText = parentDiv.querySelector(".hidden-text");
+        if (hiddenText.style.display === "none") {
+            hiddenText.style.display = "block";
+            btn.innerHTML = "Скрыть";
+        } else {
+            hiddenText.style.display = "none";
+            btn.innerHTML = "Подробнее";
+        }
+    }
+</script>
 </body>
 </html>

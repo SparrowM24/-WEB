@@ -9,10 +9,9 @@
         :root {
             --primary-color: #008B0F;
             --secondary-color: #FFF;
-            --font-family: 'Montserrat', sans-serif;
         }
         body {
-            font-family: var(--font-family);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--secondary-color);
             color: #333;
             margin: 0;
@@ -20,44 +19,67 @@
             line-height: 1.6;
         }
         .container {
-       8px     max-width: 1200px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
         /* Меню навигации */
-        nav {
-            background-color: #008B0F;
-            padding: 0.6rem 1rem;
-            position: sticky;
-            top: 0;
+          .menu-icon {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            width: 32px;
+            height: 28px;
+            cursor: pointer;
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .menu-icon span {
+            display: block;
+            height: 4px;
+            background-color: #333;
+            border-radius: 2px;
+            transition: background-color 0.3s ease;
+        }
+
+        .menu-panel {
+            position: fixed;
+            top: 50px;
+            right: 1rem;
+            background: #fff;
+            box-shadow: 0 2px 10px rgb(0 0 0 / 0.15);
+            border-radius: 8px;
+            padding: 0.5rem 0;
+            min-width: 160px;
+            display: none;
+            flex-direction: column;
             z-index: 1000;
         }
-        nav ul {
-            list-style-type: none;
-            margin: 0;
-            margin-left: 40px;
-            margin-right: 40px;
+
+        .menu-panel.show {
             display: flex;
-            justify-content: center;
-     261-61-61</p>
-   }
-        nav ul li a {
-            color: white;
+        }
+
+        .menu-panel a {
+            padding: 0.75rem 1.25rem;
             text-decoration: none;
-            font-size: 16px;
-            margin:0 10px 0 10px ;
-            border-radius: 4px;
-            transition: all 0.3s ease-in-out;
+            color: #333;
+            font-weight: 500;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
-        nav ul li a:hover,
-        nav ul li a:focus {
-     30/1
-       background-color: #025c0b; 
+
+        .menu-panel a:hover {
+            background-color: #008B0F;
             color: white;
         }
-        nav ul li a.active {
-            background-color: #046d00;
-            color: #008B0F;
+
+        .menu-panel a.active {
+            background-color: #005a09;
+            color: #fff;
+            font-weight: 700;
         }
         .contacts-section {
             background-color: var(--secondary-color);
@@ -87,15 +109,33 @@
     </style>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="about.html">О компании</a></li>
-            <li><a href="News.html">Новости</a></li>
-            <li><a href="calculator.html">Калькулятор курса валют</a></li>
-            <li><a href="contacts.html" class="active" aria-current="page">Контактные данные</a></li>
-            <li><a href="video.html">Видео</a></li>
-        </ul>
+    <div class="menu-icon" id="menuIcon" aria-label="Меню" role="button" tabindex="0" aria-expanded="false" aria-controls="menuPanel">
+        <span></span><span></span><span></span>
+    </div>
+
+    <nav class="menu-panel" id="menuPanel" role="menu" aria-labelledby="menuIcon">
+        <a href="about.html" class="active" role="menuitem" tabindex="-1">О нас</a>
+        <a href="News.html" role="menuitem" tabindex="-1">Новости</a>
+        <a href="calculator.html" role="menuitem" tabindex="-1">Калькулятор</a>
+        <a href="contacts.html" role="menuitem" tabindex="-1">Контакты</a>
     </nav>
+
+    <script>
+        var icon = document.querySelector('#menuIcon');
+        var panel = document.querySelector('#menuPanel');
+
+        icon.addEventListener('click', function() {
+        panel.classList.toggle('show');
+        icon.setAttribute('aria-expanded', panel.classList.contains('show'));
+        });
+
+        document.body.addEventListener('click', function(event) {
+        if (!event.target.closest('.menu-icon,.menu-panel')) {
+            panel.classList.remove('show');
+            icon.setAttribute('aria-expanded', false);
+        }
+        });
+    </script>
     <div class="container">
         <section class="contacts-section">
             <h2>Наши контакты</h2>

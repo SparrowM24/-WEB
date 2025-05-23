@@ -13,19 +13,26 @@
             --primary-color: #008B0F;
             --secondary-color: #FFF;
         }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--secondary-color);
             color: #333;
-            margin: 0;
-            padding: 0;
             line-height: 1.6;
         }
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            margin-top: 80px; /* Отступ для фиксированного меню */
         }
+        
         header {
             color: var(--secondary-color);
             padding: 15px 0;
@@ -36,67 +43,96 @@
             background-position: center;
             background-attachment: fixed;
         }
-        /* Меню навигации */
-        .menu-icon {
+        
+        /* Новое меню */
+        .menu-container {
             position: fixed;
-            top: 1rem;
-            right: 1rem;
-            width: 32px;
-            height: 28px;
-            cursor: pointer;
-            z-index: 1001;
+            top: 20px;
+            right: 20px;
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .menu-icon span {
-            display: block;
-            height: 4px;
-            background-color: #333;
-            border-radius: 2px;
-            transition: background-color 0.3s ease;
-        }
-
-        .menu-panel {
-            position: fixed;
-            top: 50px;
-            right: 1rem;
-            background: #fff;
-            box-shadow: 0 2px 10px rgb(0 0 0 / 0.15);
-            border-radius: 8px;
-            padding: 0.5rem 0;
-            min-width: 160px;
-            display: none;
-            flex-direction: column;
+            flex-direction: row-reverse;
+            align-items: center;
             z-index: 1000;
         }
-
-        .menu-panel.show {
+        
+        .menu-items {
             display: flex;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            max-width: 0;
+            transition: max-width 0.3s ease, padding 0.3s ease;
         }
-
-        .menu-panel a {
-            padding: 0.75rem 1.25rem;
+        
+        .menu-container.active .menu-items {
+            max-width: 500px;
+            padding: 0 15px;
+        }
+        
+        .menu-items a {
+            display: block;
+            padding: 12px 15px;
             text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            color: #555;
+            white-space: nowrap;
+            transition: all 0.2s;
         }
-
-        .menu-panel a:hover {
-            background-color: #008B0F;
-            color: white;
-        }
-
-        .menu-panel a.active {
-            background-color: #005a09;
+        
+        .menu-items a:hover {
             color: #fff;
-            font-weight: 700;
+            background: var(--primary-color);
         }
+        
+        .menu-items a.active {
+            color: #fff;
+            background: #005a09;
+        }
+        
+        .menu-toggle {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: background 0.2s;
+        }
+        
+        .menu-toggle:hover {
+            background: #005a09;
+        }
+        
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background: white;
+            margin: 4px 0;
+            transition: all 0.3s;
+        }
+        
+        .menu-container.active .menu-toggle span:nth-child(1) {
+            transform: translateY(6px) rotate(45deg);
+        }
+        
+        .menu-container.active .menu-toggle span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .menu-container.active .menu-toggle span:nth-child(3) {
+            transform: translateY(-6px) rotate(-45deg);
+        }
+        
+        /* Стили новостей */
         .news-section {
             margin-bottom: 40px;
         }
+        
         .news-item {
             background-color: var(--secondary-color);
             border-left: 5px solid var(--primary-color);
@@ -104,15 +140,18 @@
             margin-bottom: 20px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
+        
         .news-item h2 {
             color: var(--primary-color);
             font-size: 24px;
             margin-bottom: 10px;
         }
+        
         .news-item p {
             font-size: 16px;
             line-height: 1.6;
         }
+        
         .news-item .more-button {
             background-color: var(--primary-color);
             color: var(--secondary-color);
@@ -123,55 +162,46 @@
             font-size: 14px;
             transition: background-color 0.3s ease-in-out;
         }
+        
         .news-item .more-button:hover {
             background-color: #00A81E;
         }
+        
         .hidden-text {
             display: none;
             margin-top: 10px;
         }
+        
         .show-more-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+        
         .show-more-container .date {
             font-size: 14px;
             color: #777;
         }
-        
     </style>
 </head>
 <body>
-    <header>
-    </header>
-    <div class="menu-icon" id="menuIcon" aria-label="Меню" role="button" tabindex="0" aria-expanded="false" aria-controls="menuPanel">
-        <span></span><span></span><span></span>
+    <header></header>
+    
+    <!-- Новое меню -->
+    <div class="menu-container">
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <nav class="menu-items">
+            <a href="about.html">О нас</a>
+            <a href="News.html" class="active">Новости</a>
+            <a href="calculator.html">Калькулятор</a>
+            <a href="contacts.html">Контакты</a>
+        </nav>
     </div>
 
-    <nav class="menu-panel" id="menuPanel" role="menu" aria-labelledby="menuIcon">
-        <a href="about.html" role="menuitem" tabindex="-1">О нас</a>
-        <a href="News.html" class="active" role="menuitem" tabindex="-1">Новости</a>
-        <a href="calculator.html" role="menuitem" tabindex="-1">Калькулятор</a>
-        <a href="contacts.html" role="menuitem" tabindex="-1">Контакты</a>
-    </nav>
-
-    <script>
-        var icon = document.querySelector('#menuIcon');
-        var panel = document.querySelector('#menuPanel');
-
-        icon.addEventListener('click', function() {
-        panel.classList.toggle('show');
-        icon.setAttribute('aria-expanded', panel.classList.contains('show'));
-        });
-
-        document.body.addEventListener('click', function(event) {
-        if (!event.target.closest('.menu-icon,.menu-panel')) {
-            panel.classList.remove('show');
-            icon.setAttribute('aria-expanded', false);
-        }
-        });
-    </script>
     <div class="container">
         <div class="news-section">
             <div class="news-item">
@@ -188,6 +218,8 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Остальные новостные блоки остаются без изменений -->
         <div class="news-section">
             <div class="news-item">
                 <h2>Запуск промышленного производства новых видов дорожных битумов</h2>
@@ -323,19 +355,38 @@
                 </div>
             </div>
         </div>
+        
     </div>
+
     <script>
-    function toggleHiddenText(btn) {
-        let parentDiv = btn.parentNode.parentNode;
-        let hiddenText = parentDiv.querySelector(".hidden-text");
-        if (hiddenText.style.display === "none") {
-            hiddenText.style.display = "block";
-            btn.innerHTML = "Скрыть";
-        } else {
-            hiddenText.style.display = "none";
-            btn.innerHTML = "Подробнее";
+        // Скрипт для меню
+        const menu = document.querySelector('.menu-container');
+        const toggle = document.querySelector('.menu-toggle');
+        const links = document.querySelectorAll('.menu-items a');
+        
+        toggle.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
+        
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                links.forEach(l => l.classList.remove('active'));
+                e.target.classList.add('active');
+            });
+        });
+        
+        // Скрипт для показа/скрытия текста
+        function toggleHiddenText(btn) {
+            let parentDiv = btn.parentNode.parentNode;
+            let hiddenText = parentDiv.querySelector(".hidden-text");
+            if (hiddenText.style.display === "none") {
+                hiddenText.style.display = "block";
+                btn.innerHTML = "Скрыть";
+            } else {
+                hiddenText.style.display = "none";
+                btn.innerHTML = "Подробнее";
+            }
         }
-    }
-</script>
+    </script>
 </body>
 </html>

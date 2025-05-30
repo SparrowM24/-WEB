@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="Img/Logo.png" type="image/x-icon">
+  <link href="menu.css" rel="stylesheet">
   <title>Видео о компании</title>
   <style>
     * {
@@ -50,94 +51,9 @@
       height: 100%;
       border: none;
     }
-    
-    /* Новое меню */
-    .menu-container {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      display: flex;
-      flex-direction: row-reverse;
-      align-items: center;
-      z-index: 1000;
-    }
-    
-    .menu-items {
-      display: flex;
-      background: white;
-      border-radius: 6px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      overflow: hidden;
-      max-width: 0;
-      transition: max-width 0.3s ease, padding 0.3s ease;
-    }
-    
-    .menu-container.active .menu-items {
-      max-width: 500px;
-      padding: 0 15px;
-    }
-    
-    .menu-items a {
-      display: block;
-      padding: 12px 15px;
-      text-decoration: none;
-      color: #555;
-      white-space: nowrap;
-      transition: all 0.2s;
-    }
-    
-    .menu-items a:hover {
-      color: #fff;
-      background: #008B0F;
-    }
-    
-    .menu-items a.current {
-      color: #fff;
-      background: #025c0b;
-    }
-    
-    .menu-toggle {
-      width: 50px;
-      height: 50px;
-      background: #008B0F;
-      border-radius: 6px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      transition: background 0.2s;
-    }
-    
-    .menu-toggle:hover {
-      background: #025c0b;
-    }
-    
-    .menu-toggle span {
-      display: block;
-      width: 25px;
-      height: 2px;
-      background: white;
-      margin: 4px 0;
-      transition: all 0.3s;
-    }
-    
-    .menu-container.active .menu-toggle span:nth-child(1) {
-      transform: translateY(6px) rotate(45deg);
-    }
-    
-    .menu-container.active .menu-toggle span:nth-child(2) {
-      opacity: 0;
-    }
-    
-    .menu-container.active .menu-toggle span:nth-child(3) {
-      transform: translateY(-6px) rotate(-45deg);
-    }
   </style>
 </head>
 <body>
-  <!-- Новое меню -->
   <div class="menu-container">
     <div class="menu-toggle">
       <span></span>

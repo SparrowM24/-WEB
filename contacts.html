@@ -106,19 +106,21 @@
         const toggle = document.querySelector('.menu-toggle');
         const links = document.querySelectorAll('.menu-items a');
         
-        toggle.addEventListener('click', () => {
+        toggle.addEventListener('click', function() {
             menu.classList.toggle('active');
         });
         
-        links.forEach(link => {
-            link.addEventListener('click', (e) => {
-                links.forEach(l => l.classList.remove('active'));
+        links.forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                links.forEach(function(l) {
+                    l.classList.remove('active');
+                });
                 e.target.classList.add('active');
             });
         });
         
         // Скрипт для карты
-        ymaps.ready(function () {
+        ymaps.ready(function() {
             var map = new ymaps.Map('map', {
                 center: [54.738161, 55.985958], // Координаты Уфы, ул. Карла Маркса, д. 30/1
                 zoom: 16
